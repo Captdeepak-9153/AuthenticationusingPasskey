@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup page</title>
+</head>
+<body>
+    <form id="register-form">
+        <input type='text' placeholder="username" id='username'>
+        <input type='password' placeholder="password" id='password'>
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('#register-form');
+        const usernamefield = document.getElementById("username");
+        const passwordfield = document.getElementById("password");
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: usernamefield.value, password: passwordfield.value}),
+            });
+
+            const result = await response.json();
+            // Handle the result here
+            const {id} = result;
+            window.location.replace(`http://localhost:3000/profle.html?userId=${id}`);
+        });
+    </script>
+</body>
+</html>
